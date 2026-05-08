@@ -2,6 +2,9 @@ package pio.daw.cruddemo.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +21,7 @@ public class Persona {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = Shape.STRING)
     private LocalDate birthDate;
     private String rol;
     private String classroom;
