@@ -8,11 +8,20 @@ import java.util.Optional;
 import java.time.LocalDate;
 
 
+
 public interface PersonaRepository extends CrudRepository<Persona,Long> {
-    List<Persona> getByBirthDateOrderByRol(LocalDate birthDate, String rol);
-    void deleteByRol(String rol);
     Optional<Persona> findFirstByName(String name);
-    List<Persona> findByClassroomOrderByBirthDate(String classroom);
-    List<Persona> findByName(String name);
-    
+    List<Persona> findByNameStartingWith(String name);
+    List<Persona> findByRol(String rol);
+    List<Persona> findByClassroom(String classroom);
+    List<Persona> findByRolAndClassroom(String rol, String classroom); 
+    List<Persona> findByBirthDateBetween(LocalDate start, LocalDate end);
+
+    long countByRol(String rol);
+    long countByClassroom(String classroom);
+
+    void deleteByRol(String rol);
+    void deleteByClassroom(String classroom);
+    void deleteByRolAndClassroom(String rol, String classroom);
+
 }

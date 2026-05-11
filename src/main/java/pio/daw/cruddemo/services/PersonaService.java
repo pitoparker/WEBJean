@@ -1,7 +1,7 @@
 package pio.daw.cruddemo.services;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,51 +15,52 @@ public class PersonaService {
     @Autowired
     private PersonaRepository repo;
 
-    public List<Persona> getPersonaPorNombre(String nombre){
-        List<Persona> result = new ArrayList<>();
-        System.out.println("NOMBRE: " + nombre);        
-
-        if(nombre == null || nombre.isEmpty()){
-            for(Persona p :repo.findAll()){
-                result.add(p);
-            }
-        }
-        else{
-            if(nombre.startsWith("\"")) nombre = nombre.substring(1,nombre.length()-1);
-            result = repo.findByName(nombre);
-        }
-        return result;
+    public List<Persona> getPersonaPorNombre(String nombre) {
+        if(nombre == null) nombre = "";
+        return repo.findByNameStartingWith(nombre);
     }
 
-    public List<Persona> getPersonasEnClase(String clase){
-        return repo.findByClassroomOrderByBirthDate(clase);
+    public List<Persona> getPersonasEnClase(String clase) {
+        return repo.findByClassroom(clase);
     }
 
-    public Persona crearPersonaSiNoExiste(Persona p){
-        Persona result = repo.findFirstByName(p.getName()).orElse(null);
-        if (result == null){
-            result = repo.save(p);
-        }
-        return result;
+    public Persona crearPersonaSiNoExiste(Persona p) {
+        return repo.findFirstByName(p.getName())
+                .orElse(repo.save(p));
     }
 
-    public void borrarPersona(String nombre){
-        
-    }
-    
-    public void borrarPersona(Long id){
-        
-    }
-
-    public Persona cambiarRol(String nombre, String rol){
-        return null;
-
+    public Optional<Long> borrarPersona(String nombre) {
+        return repo.findFirstByName(nombre)
+                .map(p -> {
+                    Long id = p.getId();
+                    repo.delete(p);
+                    return id;
+                });
     }
 
-    public Persona cambiarClase(String nombre, String clase){
-        return null;
-
+    public Optional<Long> borrarPersona(Long id) {
+        return repo.findById(id)
+                .map(p -> {
+                    repo.delete(p);
+                    return id;
+                });
     }
 
-    
+    public Optional<Persona> cambiarRol(Long id, String rol) {
+        return repo.findById(id)
+                .map(p -> {
+                    p.setRol(rol);
+                    return repo.save(p);
+                });
+    }
+
+    public Optional<Persona> cambiarClase(Long id, String clase) {
+        return repo.findById(id)
+                .map(p -> {
+                    p.setClassroom(clase);
+                    ;
+                    return repo.save(p);
+                });
+    }
+
 }

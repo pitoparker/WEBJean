@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pio.daw.cruddemo.models.Persona;
-import pio.daw.cruddemo.repositories.PersonaRepository;
 import pio.daw.cruddemo.services.PersonaService;
 
 import java.util.List;
@@ -24,13 +23,12 @@ public class PersonaController {
     @Autowired
     private PersonaService service;
 
-    @GetMapping("/clase/{clase}")
-    public List<Persona> obtenerPersonaPorID(@PathVariable String clase) {
-        return service.getPersonasEnClase(clase);
-    }
-
     @GetMapping("")
-    public List<Persona> obtenerPersonas(@RequestParam(required = false) String name) {
+    public List<Persona> obtenerPersonas(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String rol,
+            @RequestParam(required = false) String classroom) {
+
         return service.getPersonaPorNombre(name);
     }
 
@@ -40,7 +38,7 @@ public class PersonaController {
     }
 
     @DeleteMapping("/id/{id}")
-    public Persona borrarPorId(@PathVariable String id){
+    public Persona borrarPorId(@PathVariable String id) {
         return null;
     }
 
