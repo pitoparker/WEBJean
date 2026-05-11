@@ -14,7 +14,10 @@ public interface PersonaRepository extends CrudRepository<Persona,Long> {
     List<Persona> findByNameStartingWith(String name);
     List<Persona> findByRol(String rol);
     List<Persona> findByClassroom(String classroom);
-    List<Persona> findByRolAndClassroom(String rol, String classroom); 
+    List<Persona> findByNameStartingWithAndRol(String name, String rol);
+    List<Persona> findByNameStartingWithAndClassroom(String name, String classroom);
+    List<Persona> findByNameStartingWithAndRolAndClassroom(String name, String rol, String classroom);
+    List<Persona> findByRolAndClassroom(String rol, String classroom);
     List<Persona> findByBirthDateBetween(LocalDate start, LocalDate end);
 
     long countByRol(String rol);
