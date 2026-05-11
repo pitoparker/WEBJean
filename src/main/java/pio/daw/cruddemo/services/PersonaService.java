@@ -66,6 +66,10 @@ public class PersonaService {
                 });
     }
 
+    public Optional<Persona> buscarPorId(Long id) {
+        return repo.findById(id);
+    }
+
     public Optional<Persona> cambiarRol(Long id, String rol) {
         return repo.findById(id)
                 .map(p -> {
