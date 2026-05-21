@@ -101,23 +101,23 @@ public class RestauranteWebController {
     // ── PLATOS ───────────────────────────────────────────────────────────
 
     /** GET /web/restaurantes/{id}/platos/nuevo */
-    @GetMapping("/{id}/platos/nuevo")
-    public String nuevoPlatoForm(@PathVariable Long id, Model model) {
-        Optional<Restaurante> opt = service.findById(id);
-        if (opt.isEmpty()) return "redirect:/web/restaurantes";
-        model.addAttribute("plato", new Plato());
-        model.addAttribute("restaurante", opt.get());
-        return "platos/nuevo";
+    @GetMapping("/{restauranteId}/platos/nuevo")
+    public String nuevoPlatoForm(@PathVariable Long restauranteId, Model model) {
+    Optional<Restaurante> opt = service.findById(restauranteId);
+    if (opt.isEmpty()) return "redirect:/web/restaurantes";
+    model.addAttribute("plato", new Plato());
+    model.addAttribute("restaurante", opt.get());
+    return "platos/nuevo";
     }
 
     /** POST /web/restaurantes/{id}/platos/nuevo */
-    @PostMapping("/{id}/platos/nuevo")
-    public String guardarPlato(@PathVariable Long id, @ModelAttribute Plato plato) {
-        service.findById(id).ifPresent(r -> {
-            plato.setRestaurante(r);
-            service.savePlato(plato);
-        });
-        return "redirect:/web/restaurantes/" + id;
+    @PostMapping("/{restauranteId}/platos/nuevo")
+    public String guardarPlato(@PathVariable Long restauranteId, @ModelAttribute Plato plato) {
+    service.findById(restauranteId).ifPresent(r -> {
+        plato.setRestaurante(r);
+        service.savePlato(plato);
+    });
+    return "redirect:/web/restaurantes/" + restauranteId;
     }
 
     /** GET /web/restaurantes/platos/editar/{id} */
