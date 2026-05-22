@@ -11,4 +11,4 @@ http://localhost:8080/api/restaurante   API REST restaurantes JSON
 6.- Finalizar: Después de haber toqueteado por todos lados el programa, volvemos a la terminal y hacemos Ctrl+c, aceptamos todo. Si queremos parar la base de datos hacemos:
 docker-compose down
 
-Fin JEAN FRANCO JUAREZ LOZANO DAW
+Fin JEAN FRANCO JUAREZ LOZANO .
